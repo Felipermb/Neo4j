@@ -28,5 +28,11 @@
             <version>3.0.1</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.neo4j</groupId>
+            <artifactId>neo4j-cypher</artifactId>
+            <version>3.0.1</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 </project>
