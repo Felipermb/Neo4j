@@ -40,7 +40,6 @@ public class Transacoes {
 //            relacao.setProperty("periodo", "1º");
             tx.success();
         }
-        banco_dados.shutdown();
     }
 
     public void inserirDisciplina(Disciplina nova) {
@@ -49,17 +48,30 @@ public class Transacoes {
             node_disciplina.setProperty("nome", nova.getNome());
             tx.success();
         }
-        banco_dados.shutdown();
 //        Relationship relacao = node_aluno.createRelationshipTo(node_disciplina, Main.RelationType.Cursa);
 //        relacao.setProperty("periodo", "1º");
     }
-    
+
     public void buscaSimples() {
         Result execResult = banco_dados.execute("match (n:Aluno) where n.matricula = 2014213539  return n.nome");
         String results = execResult.resultAsString();
         String recebe[] = results.split("\"");
-        execResult = banco_dados.execute("match (n:Aluno) where n.nome = \""+ recebe[1] +"\" return n.matricula");
+        execResult = banco_dados.execute("match (n:Aluno) where n.nome = \"" + recebe[1] + "\" return n.matricula");
         results = execResult.resultAsString();
         System.out.println(results);
+    }
+
+    public void atualizarNome() {
+        //MATCH (n:Aluno) WHERE n.matricula = 2014213539
+        //SET n.nome = "Felipe Reis"
+        //RETURN n
+    }
+
+    public void deletarTd() {
+        Result execResult = banco_dados.execute("match (n) detach delete n");
+    }
+
+    public void fecharbanco() {
+        banco_dados.shutdown();
     }
 }

@@ -6,7 +6,11 @@ public class Main {
         Disciplina nova = new Disciplina("Cálculo");
         Aluno novo = new Aluno("Felipe", 18, 2014213539, nova);
         
-        //op.inserirAluno(novo,nova);
-        op.busca();
+        //op.inserirAluno(novo);
+        //op.inserirDisciplina(nova);
+        //op.buscaSimples();
+        //op.deletarTd();
+        
+        op.fecharbanco();
     }
 }
