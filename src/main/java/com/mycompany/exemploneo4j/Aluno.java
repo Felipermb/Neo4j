@@ -4,21 +4,11 @@ public class Aluno {
     private String nome;
     private int idade;
     private int matricula;
-    private Disciplina dc;
 
-    public Aluno(String nome, int idade, int matricula, Disciplina dc) {
+    public Aluno(String nome, int idade, int matricula) {
         this.nome = nome;
         this.idade = idade;
         this.matricula = matricula;
-        this.dc = dc;
-    }
-
-    public Disciplina getDc() {
-        return dc;
-    }
-
-    public void setDc(Disciplina dc) {
-        this.dc = dc;
     }
 
     public String getNome() {

@@ -52,13 +52,26 @@ public class Transacoes {
 //        relacao.setProperty("periodo", "1º");
     }
 
-    public void buscaSimples() {
-        Result execResult = banco_dados.execute("match (n:Aluno) where n.matricula = 2014213539  return n.nome");
+    public void buscaAluno() {
+        Result execResult = banco_dados.execute("match (n:Aluno) return n.nome");
         String results = execResult.resultAsString();
-        String recebe[] = results.split("\"");
-        execResult = banco_dados.execute("match (n:Aluno) where n.nome = \"" + recebe[1] + "\" return n.matricula");
-        results = execResult.resultAsString();
         System.out.println(results);
+        String recebe[] = results.split("\"");
+        
+        for(int i=1; i<recebe.length;  i = i+2){
+            System.out.println(recebe[i]);
+        }
+    }
+    
+    public void buscaDisciplina(){
+        Result execResult = banco_dados.execute("match (n:Disciplina) return n.nome");
+        String results = execResult.resultAsString();
+        System.out.println(results);
+        String recebe[] = results.split("\"");
+
+        for(int i=1; i<recebe.length;  i = i+2){
+            System.out.println(recebe[i]);
+        }
     }
 
     public void atualizarNome() {
