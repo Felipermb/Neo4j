@@ -1,16 +1,10 @@
 package com.mycompany.exemploneo4j;
 
-import java.beans.Statement;
 import java.io.File;
-import java.util.List;
-import java.util.ListIterator;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.RelationshipType;
-import org.neo4j.graphdb.ResourceIterable;
-import org.neo4j.graphdb.ResourceIterator;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
@@ -67,7 +61,6 @@ public class Transacoes {
         for (int i = 1; i < recebe.length; i = i + 2) {
             System.out.println(recebe[i]);
         }
-
     }
 
     public void buscaDisciplina() {
@@ -102,11 +95,29 @@ public class Transacoes {
             System.out.println("Existe relacionamento,\n Não pode deletar");
         }
     }
-
+    
+    public void deletarDisciplina(String codigo) {
+        Result execResult = banco_dados.execute("match (b:Disciplina) where b.codigo = \""+codigo+"\" \n "
+                + "match (n)-[rel:Cursa]->(b) return n.nome");
+        String results = execResult.resultAsString();
+        String recebe[] = results.split("\"");
+        //System.out.println(recebe.length);
+        if(recebe.length == 1){
+            banco_dados.execute("match (n:Disciplina) where n.codigo = \""+codigo+"\" \n delete n");
+        }else{
+            System.out.println("Existe relacionamento,\n Não pode deletar");
+        }
+    }
+    
     public void deletarTd() {
         Result execResult = banco_dados.execute("match (n) detach delete n");
     }
 
+    public void deletarRelacionamento(int matricula, String codigo){
+        banco_dados.execute("match (a:Aluno {matricula: "+matricula+"}), (d:Disciplina {codigo: \""+codigo+"\"}) "
+                + "match (a)-[rel:Cursa]->(d) delete rel");
+    }
+    
     public void fecharbanco() {
         banco_dados.shutdown();
     }
