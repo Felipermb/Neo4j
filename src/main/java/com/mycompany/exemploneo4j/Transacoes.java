@@ -86,11 +86,21 @@ public class Transacoes {
                 + "create (a)-[:Cursa]->(d)");
     }
     
-    public void atualizarNome(int matricula, String nome_novo) {
+    public void atualizarNome(int matricula, String nome_novo){
         banco_dados.execute("match (n:Aluno) where n.matricula = "+matricula+" \n set n.nome = \""+nome_novo+"\"");
-        //MATCH (n:Aluno) WHERE n.matricula = 2014213539
-        //SET n.nome = "Felipe Reis"
-        //RETURN n
+    }
+    
+    public void deletarAluno(int matricula) {
+        Result execResult = banco_dados.execute("match (n:Aluno) where n.matricula = "+matricula+" \n "
+                + "match (n)-[rel:Cursa]->(b) return b.nome");
+        String results = execResult.resultAsString();
+        String recebe[] = results.split("\"");
+        //System.out.println(recebe.length);
+        if(recebe.length == 1){
+            banco_dados.execute("match (n:Aluno) where n.matricula = "+matricula+" \n delete n");
+        }else{
+            System.out.println("Existe relacionamento,\n Não pode deletar");
+        }
     }
 
     public void deletarTd() {
